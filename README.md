@@ -1,5 +1,7 @@
 # Financial Calculator
 
+I was tired of using a slow, old, and unintuitive calculator, so I made my own, it has newer buttons, like a copy and paste, undo, history, and a DEFINE button that explains what each button does, and many more things. Basically, I just wanted a version that I wish was real, every little thing i added was a result of an issue I had with the physical calculator, yes this is vibe coded, took me about 13 hours, if you have trouble sideloading it onto your phone, just put the github link into an ai chat and it will explain everything. Oh, if you hold the top right corner, it flips the calculator around and lets you change all of the colors. Now back to the boring stuff, I hope you enjoy it/that it works at all: 
+
 An independent, open-source financial calculator that follows the keystroke model of the BA II Plus. It is an offline TypeScript calculation engine with a browser interface and an iPhone app. Version 0.1.0 includes numerical functions, all 44 physical key identifiers, worksheet navigation, calculator state, display formatting, completion events, and validated session storage. A local browser keypad and an Expo Go iPhone app are included. The mobile app preserves the existing UI in a bundled WebView and adds native storage, clipboard, safe areas, and haptics.
 
 ## Use it on your iPhone
