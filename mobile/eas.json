@@ -1,0 +1,19 @@
+{
+  "cli": {
+    "appVersionSource": "local"
+  },
+  "build": {
+    "altstore": {
+      "developmentClient": false,
+      "node": "24.20.0",
+      "ios": {
+        "config": "altstore.yml",
+        "withoutCredentials": true,
+        "simulator": false,
+        "buildConfiguration": "Release",
+        "scheme": "FinancialCalculator",
+        "resourceClass": "medium"
+      }
+    }
+  }
+}

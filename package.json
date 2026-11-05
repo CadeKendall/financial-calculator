@@ -1,0 +1,15 @@
+{
+  "name": "ba-ii-plus-engine",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "description": "Independent, offline TypeScript financial calculator engine",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist", "README.md", "COVERAGE.md"],
+  "scripts": { "start": "node scripts/serve.mjs --open", "build": "tsc -p tsconfig.json", "typecheck": "tsc --noEmit -p tsconfig.json", "test": "vitest run", "test:watch": "vitest", "verify": "npm run typecheck && npm test && npm run build", "demo": "npm run build && node examples/basic.mjs" },
+  "dependencies": { "decimal.js": "^10.6.0" },
+  "devDependencies": { "typescript": "^5.9.3", "vitest": "^3.2.4" }
+}

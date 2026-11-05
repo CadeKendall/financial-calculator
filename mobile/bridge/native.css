@@ -1,0 +1,18 @@
+html.native-shell{scrollbar-gutter:auto;overscroll-behavior:none}
+.native-shell,.native-shell body{height:100%;overflow:hidden;touch-action:pan-x pan-y}
+.native-shell main{height:100%;overflow-x:clip;overflow-y:auto;overscroll-behavior:none;scrollbar-width:none}
+.native-shell main::-webkit-scrollbar{display:none}
+.native-shell .calculator{--bottom-rest:max(44px,calc(var(--safe-bottom) + 12px));padding-bottom:var(--bottom-rest)}
+.native-shell #calculator-front:not([hidden]){display:flex;flex-direction:column;min-height:calc(100svh - var(--case-top) - var(--bottom-rest))}
+.native-shell #calculator-front>*{flex-shrink:0}
+.native-shell #calculator-front>.display-shell{flex-grow:1;min-height:176px}
+.native-shell input{font-size:16px}
+.native-shell .define-dialog{touch-action:pan-y}
+.native-shell .definition-body{touch-action:pan-y}
+.native-shell body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.native-shell input,.native-shell .definition-body,.native-shell .history-body{-webkit-user-select:text;user-select:text}
+.native-shell .calculator{box-shadow:none}
+.native-shell .calculator-foot{font-size:9px}
+.native-shell .native-haptics{display:block;margin-top:14px;width:100%;min-height:44px}
+.native-shell .key .face{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.native-shell .definition-body{contain:paint;clip-path:inset(0)}

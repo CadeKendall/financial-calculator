@@ -1,0 +1,22 @@
+build:
+  name: Standalone calculator for AltStore
+  steps:
+    - eas/checkout
+    - eas/install_node_modules
+    - eas/resolve_build_config
+    - run:
+        name: Check the locally bundled calculator is included
+        command: test -s generated/calculator.ts
+    - eas/prebuild
+    - run:
+        name: Install iOS dependencies
+        working_directory: ios
+        command: pod install
+    - run:
+        name: Build an unsigned iPhone release and package the IPA
+        command: bash scripts/build-altstore.sh
+    - eas/upload_artifact:
+        name: Upload the calculator for AltStore signing
+        inputs:
+          type: application-archive
+          path: build/altstore/FinancialCalculator.ipa

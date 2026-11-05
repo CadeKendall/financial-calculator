@@ -1,0 +1,39 @@
+/* Shared material and motion refinements; calculator geometry stays familiar. */
+html{scrollbar-gutter:stable}
+#calculator-front{-webkit-user-select:none;user-select:none}
+.calculator{transition:transform 180ms ease-out,background-color 220ms ease,border-color 220ms ease}
+.calculator.flipping{transition:none}
+.display-shell,.back-panel,.battery-cover,.screw,.theme-preset,.back-header button,.reset-theme{transition:background-color 220ms ease,color 220ms ease,border-color 220ms ease,box-shadow 160ms ease}
+.key .face{background-image:linear-gradient(180deg,#ffffff0c,transparent 48%,#00000008);box-shadow:inset 0 1px 0 #ffffff12,0 2px 1px #0008;transition:background-color 180ms ease,color 180ms ease,border-color 180ms ease,transform 120ms cubic-bezier(.2,.7,.3,1),box-shadow 120ms ease}
+.key:active .face,.key.pressed .face{transform:translateY(2px);box-shadow:inset 0 1px 3px #0002;transition-duration:45ms}
+.key:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+.theme-preset{position:relative;padding-right:24px}
+.theme-preset[aria-pressed=true]::after{content:'✓';position:absolute;right:9px;top:9px;font-size:11px}
+.theme-preset:active,.back-header button:active,.reset-theme:active{box-shadow:inset 0 2px 4px #0002}
+.definition-close,.definition-related button,.definition-current,.definition-results button,.history-dialog button{transition:background-color 140ms ease,border-color 140ms ease,box-shadow 140ms ease}
+.definition-close:active,.definition-related button:active,.definition-current:active,.history-dialog button:active{background:color-mix(in srgb,var(--screen-ink) 12%,transparent);box-shadow:inset 0 1px 3px #0001}
+.definition-body,.history-body{scrollbar-gutter:stable;scroll-padding-block:16px}
+.definition-header{padding-top:2px}
+.definition-header h2{line-height:1.2;text-wrap:balance}
+.history-dialog{--screen:var(--help-surface);--screen-ink:var(--help-ink);padding:0;border-width:2px;border-color:color-mix(in srgb,var(--case) 70%,var(--screen));width:min(420px,calc(100% - 24px));max-width:none;max-height:min(720px,85dvh);overflow:hidden;box-shadow:0 16px 56px #111a1738}
+.history-dialog[open]{display:flex;flex-direction:column}
+.history-dialog::backdrop{background:#141a1738;backdrop-filter:blur(3px);animation:history-backdrop-in 280ms ease both}
+.history-dialog[data-closing]::backdrop{animation:history-backdrop-out 180ms ease both}
+.history-heading{position:relative;flex:0 0 auto;padding:20px 20px 16px;border-bottom:1px solid color-mix(in srgb,var(--screen-ink) 16%,transparent)}
+.history-heading h2{font-size:27px;letter-spacing:-.4px}
+.history-eyebrow{letter-spacing:1.4px;margin-bottom:7px}
+.history-body{padding:0 20px max(20px,env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior:contain;min-height:0}
+#history-description{margin:15px 0 20px;font-size:12px;line-height:1.6}
+.history-entry{padding:19px 0 21px}
+.history-entry:last-child{padding-bottom:0}
+.history-entry time{font-size:10px;font-variant-numeric:tabular-nums}
+.history-entry h3{font-size:12px;margin-top:10px;opacity:.8}
+.history-result{font-size:27px;letter-spacing:-.5px;font-variant-numeric:tabular-nums;margin-bottom:10px}
+.history-entry .history-restore{background:color-mix(in srgb,var(--screen-ink) 4%,transparent)}
+.history-entry .history-restore:hover{background:color-mix(in srgb,var(--screen-ink) 9%,transparent)}
+.history-dialog button:focus-visible{outline:2px solid var(--screen-ink);outline-offset:3px}
+.history-empty{padding:24px 0 34px;text-align:center}
+@keyframes history-backdrop-in{from{background:#141a1700;backdrop-filter:blur(0)}to{background:#141a1738;backdrop-filter:blur(3px)}}
+@keyframes history-backdrop-out{from{background:#141a1738;backdrop-filter:blur(3px)}to{background:#141a1700;backdrop-filter:blur(0)}}
+@media(max-width:360px){.history-heading{padding:17px 15px 13px}.history-body{padding-inline:15px}.history-result{font-size:24px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}

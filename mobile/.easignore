@@ -1,0 +1,25 @@
+# EAS_PROJECT_ROOT is this mobile folder. Keep the generated calculator and
+# .eas/build configuration; neither needs files from the parent project online.
+node_modules/
+.git/
+.expo/
+dist/
+web-build/
+/build/
+ios/
+android/
+.env
+.env.*
+credentials.json
+*.p8
+*.p12
+*.key
+*.pem
+*.mobileprovision
+*.jks
+*.ipa
+*.log
+*.tsbuildinfo
+.DS_Store
+scripts/smoke-*
+scripts/create-qr.mjs

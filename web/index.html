@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Financial calculator</title>
+  <link rel="stylesheet" href="/web/style.css">
+  <link rel="stylesheet" href="/web/themes.css">
+  <link rel="stylesheet" href="/web/history.css">
+  <link rel="stylesheet" href="/web/help.css">
+  <link rel="stylesheet" href="/web/polish.css">
+  <link rel="stylesheet" href="/web/phone-shell.css">
+  <link rel="stylesheet" href="/web/reset-animation.css">
+  <script src="/web/phone-shell.js"></script>
+  <script type="importmap">{"imports":{"decimal.js":"/vendor/decimal.mjs"}}</script>
+  <script type="module" src="/web/app.js"></script>
+</head>
+<body>
+  <header class="page-header"><span class="wordmark">FINANCIAL CALCULATOR</span><span class="local">Local preview</span></header>
+  <main>
+    <section class="calculator" aria-label="Financial calculator">
+      <div class="system-crown" aria-hidden="true"><div class="camera-bridge"></div><div class="preview-status"><span>9:41</span><svg viewBox="0 0 66 14" width="66" height="14" fill="currentColor"><path d="M0 10h3v4H0zm5-3h3v7H5zm5-3h3v10h-3zm5-3h3v13h-3z"/><path d="M23 5q7-7 14 0M26 8q4-4 8 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="30" cy="11" r="1.5"/><rect x="43" y="2" width="19" height="11" rx="2" fill="none" stroke="currentColor"/><rect x="45" y="4" width="15" height="7" rx="1"/><path d="M64 5h2v5h-2z"/></svg></div></div>
+      <button id="theme-corner" class="theme-corner" type="button" aria-label="Theme center (hold)" aria-controls="calculator-back" aria-expanded="false" title="Hold to turn over. Keyboard: press Enter."></button>
+      <div id="calculator-front">
+      <div class="display-shell">
+        <span id="bgn-indicator" class="bgn-indicator" aria-label="Beginning-of-period payments" hidden>BGN</span>
+        <div id="copied-value" class="copied-value" hidden></div>
+        <div id="tvm-reminder" class="tvm-reminder" aria-label="TVM inputs" hidden></div>
+        <div id="indicators" class="indicators" aria-label="Active indicators"></div>
+        <div id="expression" class="expression" aria-label="Previous expression entries"></div>
+        <div class="readout"><div class="readout-labels"><span id="variable"></span><span id="context"></span></div><output id="display" aria-live="polite" aria-atomic="true">0.00</output></div>
+        <div class="display-bottom"><span id="mode" title="Arithmetic order · Angle unit">CHAIN · DEG</span></div>
+        <div class="screen-actions">
+          <button id="undo-action" class="screen-zone undo-zone" type="button" aria-label="Undo last action" title="Undo last calculator action (Ctrl+Z)" disabled><span>↶ Undo</span></button>
+          <button id="history-action" class="screen-zone history-zone" type="button" aria-label="Calculation history" aria-haspopup="dialog" aria-controls="history-dialog"><span>History <span id="history-count"></span></span></button>
+          <button id="precision-action" class="screen-zone precision-zone" type="button" aria-label="Change displayed decimals" aria-controls="display" title="Tap to cycle 2–6 decimal places"></button>
+        </div>
+      </div>
+      <p id="status" role="status">Loading calculator…</p>
+      <div id="keypad" class="keypad" aria-label="Calculator keys"></div>
+      <div class="calculator-foot"><span id="save-status">Saved on this browser</span><span>BA II Plus · Independent</span></div>
+      </div>
+      <div id="calculator-back" class="calculator-back" hidden>
+        <span class="screw screw-tl" aria-hidden="true"></span><span class="screw screw-tr" aria-hidden="true"></span><span class="screw screw-bl" aria-hidden="true"></span><span class="screw screw-br" aria-hidden="true"></span>
+        <div class="back-header"><span class="embossed">BA II Plus</span><button id="return-front" type="button">↩ Calculator</button></div>
+        <div class="back-panel">
+          <p class="back-eyebrow">THEME CENTER</p><h2>Make it yours.</h2>
+          <p class="back-description">Choose a finish, then adjust the colors.</p>
+          <div id="theme-presets" class="theme-presets" aria-label="Recommended themes"></div>
+          <h3>Custom colors</h3><div id="theme-colors" class="theme-colors"></div>
+          <p class="theme-note">Text adjusts automatically for contrast. Changes save as you go.</p>
+          <button id="reset-theme" class="reset-theme" type="button">Restore Classic</button>
+        </div>
+        <div class="battery-cover" aria-hidden="true"><span class="battery-notch"></span><span>PERSONAL FINANCIAL CALCULATOR</span><small>LOCAL · INDEPENDENT · v0.1</small></div>
+      </div>
+      <dialog id="history-dialog" class="history-dialog" aria-labelledby="history-title" aria-describedby="history-description">
+        <div class="history-heading"><div><p class="history-eyebrow">SAVED ON THIS BROWSER</p><h2 id="history-title">History</h2></div><button id="close-history" type="button" autofocus>Close</button></div>
+        <div class="history-body"><p id="history-description">Your last 50 completed calculations. Reopen restores the saved calculator session; Undo brings you back.</p>
+        <div id="history-list" class="history-list"></div></div>
+      </dialog>
+      <dialog id="define-dialog" class="define-dialog" aria-labelledby="definition-title" tabindex="-1" autofocus>
+        <div id="define-scrim" class="define-scrim" aria-hidden="true"></div>
+        <div id="definition-viewport" class="definition-viewport"><section id="definition-sheet" class="definition-sheet" aria-label="Contextual definition">
+          <button id="definition-handle" class="definition-handle" type="button" aria-label="Close definition or drag down"></button>
+          <header class="definition-header"><div><p id="definition-category"></p><h2 id="definition-title">Define</h2></div><button id="close-definition" class="definition-close" type="button">Close</button></header>
+          <div id="definition-body" class="definition-body">
+            <div id="definition-error" class="definition-error" hidden><h3>Why it stopped</h3><p id="definition-error-message"></p><p id="definition-recovery"></p></div>
+            <span id="definition-code" class="definition-code"></span>
+            <p id="definition-meaning"></p>
+            <div class="definition-example-wrap"><h3>For example</h3><p id="definition-example"></p></div>
+            <h3>What to do next</h3><p id="definition-steps"></p>
+            <p id="definition-tip" class="definition-tip"></p>
+            <button id="definition-current" class="definition-current" type="button" hidden>Back to the current screen</button>
+            <section id="definition-related-section"><h3>In this worksheet</h3><div id="definition-related" class="definition-related"></div></section>
+            <details id="definition-browse"><summary>Find another definition</summary><label class="definition-search-label" for="definition-search">Search a label, function, or worksheet</label><input id="definition-search" class="definition-search" type="search" placeholder="Try PRN, margin, or bond" autocomplete="off"><p id="definition-search-count" class="definition-count" role="status"></p><div id="definition-results" class="definition-results"></div></details>
+            <p class="definition-source">Examples explain this independent preview. <a href="https://education.ti.com/html/eguides/financials/pdfs/EN/BA-II-PLUS_EN.pdf" target="_blank" rel="noopener">TI calculator reference ↗</a></p>
+          </div>
+        </section></div>
+      </dialog>
+    </section>
+    <aside>
+      <p class="eyebrow">READY WHEN YOU ARE</p><h1>Your financial<br>calculator.</h1>
+      <p class="intro">Click the keys just as you would on the handheld. The gold labels are secondary functions—press <kbd>2ND</kbd> first.</p>
+      <div class="guide">
+        <h2>Start here</h2>
+        <ol><li><strong>Try a calculation</strong><span>Press <kbd>2</kbd> <kbd>+</kbd> <kbd>3</kbd> <kbd>=</kbd>.</span></li><li><strong>Understand a field</strong><span>Press <kbd>Define</kbd> for its meaning, an example, and the next step.</span></li><li><strong>Clear an entry</strong><span>Use <kbd>CE/C</kbd>. Press twice to clear pending arithmetic.</span></li><li><strong>Leave a worksheet</strong><span>Press <kbd>2ND</kbd> then <kbd>CPT</kbd> (QUIT).</span></li></ol>
+      </div>
+      <details><summary>Try the mortgage example</summary><p>Start with <kbd>2ND</kbd> <kbd>+/−</kbd> <kbd>ENTER</kbd> to reset.</p><ol class="steps"><li>Set monthly payments: <kbd>2ND</kbd> <kbd>I/Y</kbd>, type 12, <kbd>ENTER</kbd>, then <kbd>2ND</kbd> <kbd>CPT</kbd>.</li><li>Enter 360 <kbd>N</kbd>, 75000 <kbd>PV</kbd>, 425.84 <kbd>+/−</kbd> <kbd>PMT</kbd>.</li><li>Press <kbd>CPT</kbd> <kbd>I/Y</kbd>. The result is <strong>5.50%</strong>.</li></ol></details>
+      <details><summary>Keyboard shortcuts</summary><p>Use number keys, + − * /, parentheses, and the decimal point. <kbd>=</kbd> calculates; <kbd>Enter</kbd> enters a worksheet value or calculates outside a worksheet. <kbd>Backspace</kbd> corrects a digit; <kbd>Esc</kbd> is CE/C. Arrow keys move through worksheets. Press <kbd>F2</kbd> for 2ND.</p></details>
+      <details><summary>Undo and calculation history</summary><p>Tap the left side of the screen, up to the center of ENTER, to undo one calculator action. Ctrl+Z (or Command+Z) does the same. Undo keeps the last 100 actions while this page is open, including entries, clears, pastes, and reopened calculations.</p><p>Tap the middle of the screen, from ENTER’s center to the right edge of IRR, for History. The last 50 completed calculations save in this browser with their full stored results, inputs, and settings. Reopen restores the saved calculator session, including registers and worksheets. Undo returns to your previous work. History begins with calculations made after this feature was added; reloading preserves history but clears Undo.</p></details>
+      <details><summary>TVM reminders, copy, and themes</summary><p>Entering any TVM value reveals all five registers. Enter an explicit zero when it is an input. With four inputs entered, the remaining variable shows <strong>?</strong>. Computed answers are marked with an asterisk.</p><p>Tap the gold <strong>Copy</strong> key to copy the full stored value. Hold it to paste the last value copied here into the active entry; press ENTER to store a worksheet entry. With the key focused, Shift+Enter also pastes.</p><p>Hold the upper-right corner to turn the calculator over and customize its colors. Keyboard users can focus it and press Enter.</p></details>
+      <details><summary>About this preview</summary><p>This is the independent calculation engine with a browser keypad. It works locally and saves your session in this browser. The iPhone app is still to come.</p><p>French depreciation and extreme solver cases have documented fidelity limits. This is not an official Texas Instruments product.</p><a href="/COVERAGE.md" target="_blank" rel="noopener">Read the function coverage and limits ↗</a></details>
+      <p class="privacy">No account. No cloud storage. Calculations stay here.</p>
+    </aside>
+  </main>
+  <noscript>This calculator requires JavaScript to run.</noscript>
+</body>
+</html>
+
