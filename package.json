@@ -9,7 +9,7 @@
   "types": "./dist/index.d.ts",
   "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
   "files": ["dist", "README.md", "COVERAGE.md"],
-  "scripts": { "start": "node scripts/serve.mjs --open", "build": "tsc -p tsconfig.json", "typecheck": "tsc --noEmit -p tsconfig.json", "test": "vitest run", "test:watch": "vitest", "verify": "npm run typecheck && npm test && npm run build", "demo": "npm run build && node examples/basic.mjs" },
+  "scripts": { "start": "node scripts/serve.mjs --open", "build": "tsc -p tsconfig.json", "bundle:desktop": "node scripts/build-desktop.mjs", "typecheck": "tsc --noEmit -p tsconfig.json", "test": "vitest run", "test:watch": "vitest", "verify": "npm run typecheck && npm test && npm run build", "demo": "npm run build && node examples/basic.mjs" },
   "dependencies": { "decimal.js": "^10.6.0" },
   "devDependencies": { "typescript": "^5.9.3", "vitest": "^3.2.4" }
 }

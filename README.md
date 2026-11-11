@@ -8,7 +8,18 @@ An independent, open-source financial calculator that follows the keystroke mode
 
 Double-click **START-IPHONE.cmd**, sign in with the same Expo account as Expo Go on your iPhone when prompted, keep both devices on the same Wi-Fi, and scan the terminal QR code with your iPhone Camera. See [mobile instructions](mobile/README.md) for setup, verification, and connection help.
 
-## Use the calculator now
+## Use it as a Windows app
+
+Double-click **BUILD-WINDOWS-APP.cmd**. It installs what it needs (Node.js must already be installed), builds the app, and opens `desktop/release`, which contains:
+
+- `FinancialCalculator-Setup-1.0.0.exe`: installs the calculator with Start-menu and desktop shortcuts. You can uninstall it from Windows Settings → Apps.
+- `FinancialCalculator-Portable-1.0.0.exe`: runs without installing.
+
+The app opens in its own window and uses no browser, local server, or internet connection. Values, history, and themes are saved on the computer and stay after you close it; they are separate from the browser version's saved session. The executables are not code-signed, so Windows SmartScreen may show **More info → Run anyway** the first time.
+
+For development, run `npm ci` and then `npm start` in `desktop/` to rebuild the page and open the app. `npm run dist` builds the release files. The window is an [Electron](https://www.electronjs.org/) shell (`desktop/main.js`) that loads one self-contained HTML file built by `scripts/build-desktop.mjs` from `web/` and `src/`. It blocks navigation away from the calculator and allows only clipboard writes.
+
+## Use the calculator in your browser
 
 On this Windows computer, double-click **START-CALCULATOR.cmd** in this folder. It starts the calculator and opens it in your default browser. Keep its terminal window open while using it.
 

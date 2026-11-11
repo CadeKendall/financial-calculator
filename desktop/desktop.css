@@ -1,0 +1,12 @@
+/* Windows app window: the calculator fills the window like the phone app fills the screen. */
+html.desktop-shell{scrollbar-gutter:auto;overscroll-behavior:none}
+.desktop-shell,.desktop-shell body{height:100%;overflow:hidden}
+.desktop-shell main{height:100%;overflow-x:clip;overflow-y:auto;overscroll-behavior:none;scrollbar-width:none}
+.desktop-shell main::-webkit-scrollbar{display:none}
+.desktop-shell .calculator{--bottom-rest:16px;padding-bottom:var(--bottom-rest);box-shadow:none}
+.desktop-shell #calculator-front:not([hidden]){display:flex;flex-direction:column;min-height:calc(100vh - var(--case-top) - var(--bottom-rest))}
+.desktop-shell #calculator-front>*{flex-shrink:0}
+.desktop-shell #calculator-front>.display-shell{flex-grow:1;min-height:176px}
+.desktop-shell body{user-select:none}
+.desktop-shell input,.desktop-shell .definition-body,.desktop-shell .history-body{user-select:text}
+.desktop-shell .calculator-foot{font-size:9px}

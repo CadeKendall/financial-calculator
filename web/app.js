@@ -232,7 +232,7 @@ function render(){
   document.querySelector('#indicators').textContent=Object.entries(names).filter(([k])=>snap.indicators[k]).map(([,v])=>v).join('  ');
   document.querySelector('[data-key="SECOND"]').setAttribute('aria-pressed',String(state.second));
   document.querySelector('#status').textContent=toast||(state.error?`${state.error.message} Define can help.`:state.resetPending?'Press ENTER to reset all values. 2ND → CPT cancels.':state.second?'Choose a gold secondary function.':state.worksheet?'Use ↑ / ↓ to move. ENTER stores; Define explains.':'Enter a number or choose a worksheet.');
-  document.querySelector('#save-status').textContent=persistence?(window.__BA_NATIVE__?'Saved on this device':'Saved on this browser'):'Session saving unavailable';
+  document.querySelector('#save-status').textContent=persistence?(window.__BA_NATIVE__?'Saved on this device':window.__BA_DESKTOP__?'Saved on this computer':'Saved on this browser'):'Session saving unavailable';
   undoButton.disabled=!journal.canUndo;
   document.querySelector('#history-count').textContent=journal.count||'';
   precisionButton.disabled=!canCyclePrecision(state,snap);
