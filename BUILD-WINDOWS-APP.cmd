@@ -16,8 +16,8 @@ echo Building Financial Calculator for Windows...
 call npm run dist
 if errorlevel 1 goto failed
 echo.
-echo Done. Run FinancialCalculator-Setup-1.0.0.exe to install it,
-echo or use FinancialCalculator-Portable-1.0.0.exe without installing.
+echo Done. Run FinancialCalculator-Setup.exe to install it,
+echo or use FinancialCalculator-Portable.exe without installing.
 start "" explorer.exe "%~dp0desktop\release"
 pause
 exit /b

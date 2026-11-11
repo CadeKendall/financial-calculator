@@ -1,7 +1,7 @@
 {
   "name": "financial-calculator-desktop",
   "productName": "Financial Calculator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Independent offline financial calculator for Windows",
   "author": "Cade Kendall",
   "license": "MIT",
@@ -33,10 +33,10 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Financial Calculator",
-      "artifactName": "FinancialCalculator-Setup-${version}.${ext}"
+      "artifactName": "FinancialCalculator-Setup.${ext}"
     },
     "portable": {
-      "artifactName": "FinancialCalculator-Portable-${version}.${ext}"
+      "artifactName": "FinancialCalculator-Portable.${ext}"
     }
   }
 }

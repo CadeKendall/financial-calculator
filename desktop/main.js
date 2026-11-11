@@ -8,9 +8,23 @@ const PAGE = path.join(__dirname, 'generated', 'calculator.html');
 const PAGE_URL = require('node:url').pathToFileURL(PAGE).href;
 const BOUNDS_FILE = () => path.join(app.getPath('userData'), 'window-bounds.json');
 
+// The calculator's natural size in CSS pixels (narrowest comfortable width, and
+// the height at which everything fits with the LCD at its minimum). The page is
+// zoomed so this always fits the window: smaller windows shrink the whole
+// calculator instead of cutting off the bottom, larger ones enlarge it.
+const BASE_WIDTH = 420;
+const BASE_HEIGHT = 720;
+const fitZoom = (width, height) => Math.min(3, Math.max(0.4, Math.min(width / BASE_WIDTH, height / BASE_HEIGHT)));
+
 if (!app.requestSingleInstanceLock()) app.quit();
 
 let win = null;
+
+function fitToWindow() {
+  if (!win || win.isDestroyed()) return;
+  const [width, height] = win.getContentSize();
+  win.webContents.setZoomFactor(fitZoom(width, height));
+}
 
 function savedBounds() {
   try {
@@ -23,8 +37,8 @@ function savedBounds() {
 function createWindow() {
   win = new BrowserWindow({
     ...savedBounds(),
-    minWidth: 360,
-    minHeight: 640,
+    minWidth: 240,
+    minHeight: 400,
     title: 'Financial Calculator',
     icon: path.join(__dirname, 'build', 'icon.png'),
     backgroundColor: '#272a29',
@@ -38,7 +52,16 @@ function createWindow() {
     },
   });
 
-  win.once('ready-to-show', () => win.show());
+  win.once('ready-to-show', () => { fitToWindow(); win.show(); });
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.setVisualZoomLevelLimits(1, 1);
+    fitToWindow();
+  });
+  win.on('resize', fitToWindow);
+  win.on('maximize', fitToWindow);
+  win.on('unmaximize', fitToWindow);
+  // Ctrl+scroll or keyboard zoom would undo the fit, so put it back.
+  win.webContents.on('zoom-changed', () => setImmediate(fitToWindow));
   win.on('close', () => {
     try { fs.writeFileSync(BOUNDS_FILE(), JSON.stringify(win.getNormalBounds())); } catch { /* not critical */ }
   });

@@ -4,20 +4,27 @@ I was tired of using a slow, old, and unintuitive calculator, so I made my own, 
 
 An independent, open-source financial calculator that follows the keystroke model of the BA II Plus. It is an offline TypeScript calculation engine with a browser interface and an iPhone app. Version 0.1.0 includes numerical functions, all 44 physical key identifiers, worksheet navigation, calculator state, display formatting, completion events, and validated session storage. A local browser keypad and an Expo Go iPhone app are included. The mobile app preserves the existing UI in a bundled WebView and adds native storage, clipboard, safe areas, and haptics.
 
+## Download for Windows
+
+**[⬇ Download the installer (FinancialCalculator-Setup.exe)](https://github.com/CadeKendall/financial-calculator/releases/latest/download/FinancialCalculator-Setup.exe)**
+
+1. Open the downloaded file.
+2. If Windows shows "Windows protected your PC", click **More info → Run anyway**. This appears because the app isn't code-signed.
+3. Follow the installer, then open **Financial Calculator** from the Start menu or desktop shortcut.
+
+Don't want to install anything? Download the **[portable version (FinancialCalculator-Portable.exe)](https://github.com/CadeKendall/financial-calculator/releases/latest/download/FinancialCalculator-Portable.exe)** and just run it. All versions are on the [Releases page](https://github.com/CadeKendall/financial-calculator/releases).
+
+Nothing else is needed: no Node.js, browser, or internet connection. The calculator opens in its own window and resizes to fit as you drag the window. Values, history, and themes are saved on your computer. To uninstall, use Windows Settings → Apps.
+
 ## Use it on your iPhone
 
 Double-click **START-IPHONE.cmd**, sign in with the same Expo account as Expo Go on your iPhone when prompted, keep both devices on the same Wi-Fi, and scan the terminal QR code with your iPhone Camera. See [mobile instructions](mobile/README.md) for setup, verification, and connection help.
 
-## Use it as a Windows app
+## Build the Windows app yourself
 
-Double-click **BUILD-WINDOWS-APP.cmd**. It installs what it needs (Node.js must already be installed), builds the app, and opens `desktop/release`, which contains:
+Double-click **BUILD-WINDOWS-APP.cmd**. It installs what it needs (Node.js must already be installed), builds the app, and opens `desktop/release`, which contains `FinancialCalculator-Setup.exe` and `FinancialCalculator-Portable.exe`.
 
-- `FinancialCalculator-Setup-1.0.0.exe`: installs the calculator with Start-menu and desktop shortcuts. You can uninstall it from Windows Settings → Apps.
-- `FinancialCalculator-Portable-1.0.0.exe`: runs without installing.
-
-The app opens in its own window and uses no browser, local server, or internet connection. Values, history, and themes are saved on the computer and stay after you close it; they are separate from the browser version's saved session. The executables are not code-signed, so Windows SmartScreen may show **More info → Run anyway** the first time.
-
-For development, run `npm ci` and then `npm start` in `desktop/` to rebuild the page and open the app. `npm run dist` builds the release files. The window is an [Electron](https://www.electronjs.org/) shell (`desktop/main.js`) that loads one self-contained HTML file built by `scripts/build-desktop.mjs` from `web/` and `src/`. It blocks navigation away from the calculator and allows only clipboard writes.
+For development, run `npm ci` and then `npm start` in `desktop/` to rebuild the page and open the app. `npm run dist` builds the release files. To publish a new version, raise `version` in `desktop/package.json`, run `npm run dist`, and attach both `.exe` files to a new GitHub release. The window is an [Electron](https://www.electronjs.org/) shell (`desktop/main.js`) that loads one self-contained HTML file built by `scripts/build-desktop.mjs` from `web/` and `src/`. It blocks navigation away from the calculator and allows only clipboard writes. It zooms the page so the calculator's natural 420 × 720 layout always fits the window.
 
 ## Use the calculator in your browser
 
