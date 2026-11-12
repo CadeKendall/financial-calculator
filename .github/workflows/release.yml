@@ -1,0 +1,61 @@
+# Builds the desktop app for Windows and Mac and attaches the downloads to a
+# GitHub release. Runs when a release is published, or manually for an
+# existing release tag (Actions tab -> Build desktop downloads -> Run workflow).
+name: Build desktop downloads
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to attach the downloads to (for example v1.1.0)
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            command: npx electron-builder --win nsis portable --publish never
+            files: desktop/release/FinancialCalculator-Setup.exe desktop/release/FinancialCalculator-Portable.exe
+          - os: macos-latest
+            command: npx electron-builder --mac dmg --publish never
+            files: desktop/release/FinancialCalculator.dmg
+    runs-on: ${{ matrix.os }}
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install calculator dependencies
+        run: npm ci
+
+      - name: Install desktop app tools
+        working-directory: desktop
+        run: npm ci
+
+      - name: Bundle the calculator page
+        working-directory: desktop
+        run: npm run bundle
+
+      - name: Build
+        working-directory: desktop
+        run: ${{ matrix.command }}
+
+      - name: Attach downloads to the release
+        shell: bash
+        run: gh release upload "$TAG" ${{ matrix.files }} --clobber

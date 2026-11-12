@@ -1,8 +1,8 @@
 {
   "name": "financial-calculator-desktop",
   "productName": "Financial Calculator",
-  "version": "1.0.1",
-  "description": "Independent offline financial calculator for Windows",
+  "version": "1.1.0",
+  "description": "Independent offline financial calculator for Windows and Mac",
   "author": "Cade Kendall",
   "license": "MIT",
   "private": true,
@@ -10,7 +10,8 @@
   "scripts": {
     "bundle": "node ../scripts/build-desktop.mjs",
     "start": "npm run bundle && electron .",
-    "dist": "npm run bundle && electron-builder --win nsis portable"
+    "dist": "npm run bundle && electron-builder --win nsis portable",
+    "dist:mac": "npm run bundle && electron-builder --mac dmg"
   },
   "devDependencies": {
     "electron": "45.3.0",
@@ -20,8 +21,16 @@
     "appId": "com.cdkapps.financialcalculator",
     "productName": "Financial Calculator",
     "copyright": "MIT License. Not affiliated with Texas Instruments.",
-    "directories": { "output": "release", "buildResources": "build" },
-    "files": ["main.js", "generated/calculator.html", "build/icon.png", "package.json"],
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "generated/calculator.html",
+      "build/icon.png",
+      "package.json"
+    ],
     "win": {
       "icon": "build/icon.png",
       "artifactName": "FinancialCalculator-${version}-${arch}-${target}.${ext}"
@@ -37,6 +46,25 @@
     },
     "portable": {
       "artifactName": "FinancialCalculator-Portable.${ext}"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.finance",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "identity": "-",
+      "hardenedRuntime": false,
+      "artifactName": "FinancialCalculator.${ext}"
+    },
+    "dmg": {
+      "title": "Financial Calculator",
+      "artifactName": "FinancialCalculator.${ext}"
     }
   }
 }

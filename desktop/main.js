@@ -80,13 +80,17 @@ function createWindow() {
 }
 
 app.on('second-instance', () => {
-  if (!win) return;
+  if (!win || win.isDestroyed()) return;
   if (win.isMinimized()) win.restore();
   win.focus();
 });
 
+const isMac = process.platform === 'darwin';
+
 app.whenReady().then(() => {
-  Menu.setApplicationMenu(null);
+  // Windows: no menu bar. Mac: the standard app/edit/window menus so ⌘Q, ⌘W,
+  // ⌘C and ⌘V work. There is deliberately no View menu, so no zoom shortcuts.
+  Menu.setApplicationMenu(isMac ? Menu.buildFromTemplate([{ role: 'appMenu' }, { role: 'editMenu' }, { role: 'windowMenu' }]) : null);
   // The Copy key writes to the system clipboard; nothing else is allowed.
   session.defaultSession.setPermissionRequestHandler((_wc, permission, callback) => {
     callback(permission === 'clipboard-sanitized-write');
@@ -95,4 +99,7 @@ app.whenReady().then(() => {
   createWindow();
 });
 
-app.on('window-all-closed', () => app.quit());
+// Windows quits when the window closes; a Mac app stays in the Dock and
+// reopens its window when clicked.
+app.on('window-all-closed', () => { if (!isMac) app.quit(); });
+app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });

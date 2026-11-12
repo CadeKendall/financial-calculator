@@ -4,27 +4,41 @@ I was tired of using a slow, old, and unintuitive calculator, so I made my own, 
 
 An independent, open-source financial calculator that follows the keystroke model of the BA II Plus. It is an offline TypeScript calculation engine with a browser interface and an iPhone app. Version 0.1.0 includes numerical functions, all 44 physical key identifiers, worksheet navigation, calculator state, display formatting, completion events, and validated session storage. A local browser keypad and an Expo Go iPhone app are included. The mobile app preserves the existing UI in a bundled WebView and adds native storage, clipboard, safe areas, and haptics.
 
-## Download for Windows
+## Download
 
-**[⬇ Download the installer (FinancialCalculator-Setup.exe)](https://github.com/CadeKendall/financial-calculator/releases/latest/download/FinancialCalculator-Setup.exe)**
+| Windows | Mac |
+| --- | --- |
+| **[⬇ Download for Windows](https://github.com/CadeKendall/financial-calculator/releases/latest/download/FinancialCalculator-Setup.exe)** | **[⬇ Download for Mac](https://github.com/CadeKendall/financial-calculator/releases/latest/download/FinancialCalculator.dmg)** |
+
+Don't use the green **Code → Download ZIP** button to install the app: that's the source code, not the app. All versions are on the [Releases page](https://github.com/CadeKendall/financial-calculator/releases).
+
+### Windows
 
 1. Open the downloaded file.
 2. If Windows shows "Windows protected your PC", click **More info → Run anyway**. This appears because the app isn't code-signed.
 3. Follow the installer, then open **Financial Calculator** from the Start menu or desktop shortcut.
 
-Don't want to install anything? Download the **[portable version (FinancialCalculator-Portable.exe)](https://github.com/CadeKendall/financial-calculator/releases/latest/download/FinancialCalculator-Portable.exe)** and just run it. All versions are on the [Releases page](https://github.com/CadeKendall/financial-calculator/releases).
+Don't want to install anything? Download the **[portable version (FinancialCalculator-Portable.exe)](https://github.com/CadeKendall/financial-calculator/releases/latest/download/FinancialCalculator-Portable.exe)** and just run it. To uninstall, use Windows Settings → Apps.
 
-Nothing else is needed: no Node.js, browser, or internet connection. The calculator opens in its own window and resizes to fit as you drag the window. Values, history, and themes are saved on your computer. To uninstall, use Windows Settings → Apps.
+### Mac
+
+1. Open the downloaded `FinancialCalculator.dmg`.
+2. Drag **Financial Calculator** into the **Applications** folder.
+3. Open it from Applications. The first time, macOS will say it can't verify the app, because it isn't signed with a paid Apple developer account. Click **Done**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to Financial Calculator. You only need to do this once.
+
+Works on both Apple silicon and Intel Macs. To uninstall, drag the app from Applications to the Trash.
+
+On both systems nothing else is needed: no Node.js, browser, or internet connection. The calculator opens in its own window and resizes to fit as you drag the window. Values, history, and themes are saved on your computer.
 
 ## Use it on your iPhone
 
 Double-click **START-IPHONE.cmd**, sign in with the same Expo account as Expo Go on your iPhone when prompted, keep both devices on the same Wi-Fi, and scan the terminal QR code with your iPhone Camera. See [mobile instructions](mobile/README.md) for setup, verification, and connection help.
 
-## Build the Windows app yourself
+## Build the desktop app yourself
 
 Double-click **BUILD-WINDOWS-APP.cmd**. It installs what it needs (Node.js must already be installed), builds the app, and opens `desktop/release`, which contains `FinancialCalculator-Setup.exe` and `FinancialCalculator-Portable.exe`.
 
-For development, run `npm ci` and then `npm start` in `desktop/` to rebuild the page and open the app. `npm run dist` builds the release files. To publish a new version, raise `version` in `desktop/package.json`, run `npm run dist`, and attach both `.exe` files to a new GitHub release. The window is an [Electron](https://www.electronjs.org/) shell (`desktop/main.js`) that loads one self-contained HTML file built by `scripts/build-desktop.mjs` from `web/` and `src/`. It blocks navigation away from the calculator and allows only clipboard writes. It zooms the page so the calculator's natural 420 × 720 layout always fits the window.
+For development, run `npm ci` and then `npm start` in `desktop/` to rebuild the page and open the app. `npm run dist` builds the release files. On a Mac, `npm run dist:mac` builds `FinancialCalculator.dmg`. To publish a new version, raise `version` in `desktop/package.json`, push to `main`, and publish a new GitHub release with a matching tag (for example `v1.1.0`). The **Build desktop downloads** workflow (`.github/workflows/release.yml`) then builds the Windows installer, the portable exe, and the Mac `.dmg` on GitHub's machines and attaches them to the release, usually within about 10 minutes. The window is an [Electron](https://www.electronjs.org/) shell (`desktop/main.js`) that loads one self-contained HTML file built by `scripts/build-desktop.mjs` from `web/` and `src/`. It blocks navigation away from the calculator and allows only clipboard writes. It zooms the page so the calculator's natural 420 × 720 layout always fits the window.
 
 ## Use the calculator in your browser
 
