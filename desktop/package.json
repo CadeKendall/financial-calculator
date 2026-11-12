@@ -1,7 +1,7 @@
 {
   "name": "financial-calculator-desktop",
   "productName": "Financial Calculator",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Independent offline financial calculator for Windows and Mac",
   "author": "Cade Kendall",
   "license": "MIT",
