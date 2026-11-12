@@ -65,6 +65,11 @@
     "dmg": {
       "title": "Financial Calculator",
       "artifactName": "FinancialCalculator.${ext}"
-    }
+    },
+    "publish": null
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CadeKendall/financial-calculator.git"
   }
 }
