@@ -61,6 +61,8 @@ for(const key of KEY_ROWS.flat()){
     b.classList.add('copy-key','secondary-key');b.setAttribute('aria-label','Copy value; hold to paste');b.title='Copy full value. Hold to paste the last value copied here. Keyboard: Shift+Enter pastes.';
     face.textContent='Copy';const small=document.createElement('small');small.textContent='Paste (hold)';face.append(small);
     bindHold(b,{tap:()=>copyTaps.tap(),hold:()=>{copyTaps.reset();pasteCopied();},onCancel:copyTaps.reset});
+    // A mouse/touch tap must not leave focus here, or the next Enter re-clicks Copy instead of calculating.
+    b.addEventListener('mousedown',event=>event.preventDefault());
   }else b.addEventListener('click',()=>{keyboardEditing=false;dispatch(key);});
   keypad.append(b);
 }
@@ -259,8 +261,12 @@ document.addEventListener('keydown',event=>{
   if(!back.hidden){if(event.key==='Escape'){event.preventDefault();closeThemes();}return;}
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'&&!event.shiftKey&&!event.altKey&&!event.target.closest('input,select,textarea')){event.preventDefault();if(!event.repeat)undo();return;}
   if(event.target.closest('.screen-zone') && (event.key===' ' || event.key==='Enter'&&!keyboardEditing))return;
-  if(event.target.closest('#theme-corner,.copy-key')){
+  if(event.target.closest('#theme-corner')){
     if(['Enter',' '].includes(event.key))return;
+  }
+  if(event.target.closest('.copy-key')){
+    // Space or Shift+Enter work the focused Copy key; plain Enter only does once you have stopped typing an entry.
+    if(event.key===' '||event.key==='Enter'&&(event.shiftKey||!keyboardEditing))return;
   }
   if(event.key==='Tab')keyboardEditing=false;
   if(event.ctrlKey||event.metaKey||event.altKey||event.repeat||event.target.closest('summary,a,input,select,textarea'))return;
