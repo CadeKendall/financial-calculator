@@ -61,8 +61,6 @@ for(const key of KEY_ROWS.flat()){
     b.classList.add('copy-key','secondary-key');b.setAttribute('aria-label','Copy value; hold to paste');b.title='Copy full value. Hold to paste the last value copied here. Keyboard: Shift+Enter pastes.';
     face.textContent='Copy';const small=document.createElement('small');small.textContent='Paste (hold)';face.append(small);
     bindHold(b,{tap:()=>copyTaps.tap(),hold:()=>{copyTaps.reset();pasteCopied();},onCancel:copyTaps.reset});
-    // A mouse/touch tap must not leave focus here, or the next Enter re-clicks Copy instead of calculating.
-    b.addEventListener('mousedown',event=>event.preventDefault());
   }else b.addEventListener('click',()=>{keyboardEditing=false;dispatch(key);});
   keypad.append(b);
 }
@@ -255,6 +253,10 @@ function dispatch(key){
   saveSession();
   render();
 }
+// No mouse/touch focus memory: a tapped button must never keep keyboard focus, or the next Enter
+// re-presses it instead of calculating. Keyboard users can still Tab to a button and press it.
+document.addEventListener('mousedown',event=>{if(event.button===0&&event.target.closest('button')&&!event.target.closest('dialog'))event.preventDefault();},true);
+document.addEventListener('click',event=>{const b=event.target.closest('button');if(event.detail>0&&b&&!b.closest('dialog')&&document.activeElement===b)b.blur();},true);
 document.addEventListener('keydown',event=>{
   if(flip.busy||resetAnimation.locked){event.preventDefault();return;}
   if(historyDialog.open || definitionSheet.isOpen)return;
